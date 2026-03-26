@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TimetableTest {
 
     @Test
@@ -19,7 +21,13 @@ public class TimetableTest {
         timetable.addNewTrainingSession(singleTrainingSession);
 
         //Проверить, что за понедельник вернулось одно занятие
+        ArrayList<TrainingSession> dayTraining1 = timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
+        Assertions.assertEquals(1, dayTraining1.size());
+
         //Проверить, что за вторник не вернулось занятий
+        ArrayList<TrainingSession> dayTraining2 = timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY);
+        Assertions.assertEquals(0, dayTraining2.size());
+
     }
 
     @Test
@@ -42,13 +50,26 @@ public class TimetableTest {
         TrainingSession saturdayChildTrainingSession = new TrainingSession(groupChild, coach,
                 DayOfWeek.SATURDAY, new TimeOfDay(10, 0));
 
+
         timetable.addNewTrainingSession(mondayChildTrainingSession);
         timetable.addNewTrainingSession(thursdayChildTrainingSession);
         timetable.addNewTrainingSession(saturdayChildTrainingSession);
 
         // Проверить, что за понедельник вернулось одно занятие
+        ArrayList<TrainingSession> dayTraining1 = timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
+        Assertions.assertEquals(1, dayTraining1.size());
+
         // Проверить, что за четверг вернулось два занятия в правильном порядке: сначала в 13:00, потом в 20:00
+        ArrayList<TrainingSession> dayTraining4 = timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY);
+        Assertions.assertEquals(2, dayTraining4.size());
+        assertEquals(new TimeOfDay(13, 0), dayTraining4.get(0).getTimeOfDay());
+        assertEquals(new TimeOfDay(20, 0), dayTraining4.get(1).getTimeOfDay());
+
+
         // Проверить, что за вторник не вернулось занятий
+        ArrayList<TrainingSession> dayTraining2 = timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY);
+        Assertions.assertEquals(0, dayTraining2.size());
+
     }
 
     @Test
@@ -63,7 +84,91 @@ public class TimetableTest {
         timetable.addNewTrainingSession(singleTrainingSession);
 
         //Проверить, что за понедельник в 13:00 вернулось одно занятие
+        ArrayList<TrainingSession> dayTraining1_13 = timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        Assertions.assertEquals(1, dayTraining1_13.size());
+
         //Проверить, что за понедельник в 14:00 не вернулось занятий
+        ArrayList<TrainingSession> dayTraining1_14 = timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, new TimeOfDay(14, 0));
+        Assertions.assertEquals(0, dayTraining1_14.size());
+
+        //Проверить, что за среда в 14:00 не вернулось занятий
+        ArrayList<TrainingSession> dayTraining3_14 = timetable.getTrainingSessionsForDayAndTime(DayOfWeek.WEDNESDAY, new TimeOfDay(14, 0));
+        Assertions.assertEquals(0, dayTraining3_14.size());
+
     }
+
+    @Test
+    void testGetTrainingSessionsForDayAndTimeInOneTime() {
+        Timetable timetable = new Timetable();
+
+        Group group1 = new Group("Акробатика для детей", Age.CHILD, 60);
+        Coach coach1 = new Coach("Васильев", "Николай", "Сергеевич");
+        Group group2 = new Group("Спортивное программирование для детей", Age.CHILD, 60);
+        Coach coach2 = new Coach("Костицын", "Роман", "Игоревич");
+
+        TrainingSession trainingSession1_13_1 = new TrainingSession(group1, coach1,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession1_13_2 = new TrainingSession(group2, coach2,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+
+
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_2);
+
+        //Проверить, что за понедельник в 13:00 вернулось 2 занятия
+        ArrayList<TrainingSession> dayTraining1_13 = timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        Assertions.assertEquals(2, dayTraining1_13.size());
+
+    }
+
+    @Test
+    void testGetTrainingSessionsForDayInOneTime() {
+        Timetable timetable = new Timetable();
+
+        Group group1 = new Group("Акробатика для детей", Age.CHILD, 60);
+        Coach coach1 = new Coach("Васильев", "Николай", "Сергеевич");
+        Group group2 = new Group("Спортивное программирование для детей", Age.CHILD, 60);
+        Coach coach2 = new Coach("Костицын", "Роман", "Игоревич");
+
+        TrainingSession trainingSession1_13_1 = new TrainingSession(group1, coach1,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession1_13_2 = new TrainingSession(group2, coach2,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+
+
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_2);
+
+        //Проверить, что за понедельник вернулось 2 занятия
+        ArrayList<TrainingSession> dayTraining1 = timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
+        Assertions.assertEquals(2, dayTraining1.size());
+
+    }
+
+    @Test
+    void testGetAllTrainingSessions() {
+        Timetable timetable = new Timetable();
+
+        Group group1 = new Group("Акробатика для детей", Age.CHILD, 60);
+        Coach coach1 = new Coach("Васильев", "Николай", "Сергеевич");
+        Group group2 = new Group("Спортивное программирование для детей", Age.CHILD, 60);
+        Coach coach2 = new Coach("Костицын", "Роман", "Игоревич");
+
+        TrainingSession trainingSession1_13_1 = new TrainingSession(group1, coach1,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession1_13_2 = new TrainingSession(group2, coach2,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession7_13 = new TrainingSession(group2, coach2,
+                DayOfWeek.SUNDAY, new TimeOfDay(13, 0));
+
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_2);
+        timetable.addNewTrainingSession(trainingSession7_13);
+
+        //Проверить, что всего вернулось 3 занятия
+        ArrayList<TrainingSession> dayTrainingAll = timetable.getAllTrainingSessions();
+        Assertions.assertEquals(3, dayTrainingAll.size());
+    }
+
 
 }
