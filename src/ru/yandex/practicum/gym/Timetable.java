@@ -43,6 +43,18 @@ public class Timetable {
 
     public ArrayList<CounterOfTrainings> getCountByCoaches() {
         ArrayList<CounterOfTrainings> listOrderCoaches = new ArrayList<>();
+
+        Map<Coach, Integer> listCoaches = new LinkedHashMap<>();
+        ArrayList<TrainingSession> listTrainingSession = getAllTrainingSessions();
+        for (TrainingSession trainingSession : listTrainingSession) {
+            listCoaches.put(trainingSession.getCoach(), listCoaches.getOrDefault(trainingSession.getCoach(), 0) + 1);
+        }
+
+        for (Coach coach : listCoaches.keySet()) {
+            CounterOfTrainings counterOfTrainings = new CounterOfTrainings(listCoaches.get(coach), coach);
+            listOrderCoaches.add(counterOfTrainings);
+        }
+
         return listOrderCoaches;
     }
 /*

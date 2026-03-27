@@ -171,4 +171,92 @@ public class TimetableTest {
     }
 
 
+    @Test
+    void testGetCountByCoachesOrder() {
+        Timetable timetable = new Timetable();
+
+        Group group1 = new Group("Акробатика для детей", Age.CHILD, 60);
+        Coach coach1 = new Coach("Васильев", "Николай", "Сергеевич");
+        Group group2 = new Group("Спортивное программирование для детей", Age.CHILD, 60);
+        Coach coach2 = new Coach("Костицын", "Роман", "Игоревич");
+        Group group3 = new Group("Спортивное программирование для чудаков", Age.ADULT, 60);
+        Coach coach3 = new Coach("Кривошеев", "Пётр", "Семёнович");
+        Group group4 = new Group("Спортивное программирование для чудаков", Age.ADULT, 60);
+        Coach coach4 = new Coach("Кривошеев", "Пётр 2", "Семёнович");
+
+        TrainingSession trainingSession1_13_1 = new TrainingSession(group1, coach1,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession1_13_2 = new TrainingSession(group2, coach2,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession7_13 = new TrainingSession(group2, coach2,
+                DayOfWeek.SUNDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession7_14 = new TrainingSession(group3, coach3,
+                DayOfWeek.SUNDAY, new TimeOfDay(14, 0));
+        TrainingSession trainingSession7_15 = new TrainingSession(group4, coach4,
+                DayOfWeek.SUNDAY, new TimeOfDay(15, 0));
+
+
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_2);
+        timetable.addNewTrainingSession(trainingSession7_13);
+        timetable.addNewTrainingSession(trainingSession7_14);
+        timetable.addNewTrainingSession(trainingSession7_14);
+        timetable.addNewTrainingSession(trainingSession7_15);
+
+        ArrayList<CounterOfTrainings> listCounterOfTrainings = timetable.getCountByCoaches();
+
+        for (int i = 0; i < listCounterOfTrainings.size() - 1; i++) {
+            Assertions.assertTrue(listCounterOfTrainings.get(i).getCount() >= listCounterOfTrainings.get(i + 1).getCount());
+        }
+
+    }
+
+    @Test
+    void testGetCountByCoachesAddIsPositive() {
+        Timetable timetable = new Timetable();
+
+        Group group1 = new Group("Акробатика для детей", Age.CHILD, 60);
+        Coach coach1 = new Coach("Васильев", "Николай", "Сергеевич");
+        Group group2 = new Group("Спортивное программирование для детей", Age.CHILD, 60);
+        Coach coach2 = new Coach("Костицын", "Роман", "Игоревич");
+        Group group3 = new Group("Спортивное программирование для чудаков", Age.ADULT, 60);
+        Coach coach3 = new Coach("Кривошеев", "Пётр", "Семёнович");
+        Group group4 = new Group("Спортивное программирование для чудаков", Age.ADULT, 60);
+        Coach coach4 = new Coach("Кривошеев", "Пётр 2", "Семёнович");
+
+        TrainingSession trainingSession1_13_1 = new TrainingSession(group1, coach1,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession1_13_2 = new TrainingSession(group2, coach2,
+                DayOfWeek.MONDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession7_13 = new TrainingSession(group2, coach2,
+                DayOfWeek.SUNDAY, new TimeOfDay(13, 0));
+        TrainingSession trainingSession7_14 = new TrainingSession(group3, coach3,
+                DayOfWeek.SUNDAY, new TimeOfDay(14, 0));
+        TrainingSession trainingSession7_15 = new TrainingSession(group4, coach4,
+                DayOfWeek.SUNDAY, new TimeOfDay(15, 0));
+
+
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_1);
+        timetable.addNewTrainingSession(trainingSession1_13_2);
+        timetable.addNewTrainingSession(trainingSession7_13);
+        timetable.addNewTrainingSession(trainingSession7_14);
+        timetable.addNewTrainingSession(trainingSession7_14);
+        timetable.addNewTrainingSession(trainingSession7_15);
+
+        ArrayList<CounterOfTrainings> listCounterOfTrainings = timetable.getCountByCoaches();
+        System.out.println(listCounterOfTrainings.size());
+        assertEquals(4, listCounterOfTrainings.size());
+
+    }
+
 }

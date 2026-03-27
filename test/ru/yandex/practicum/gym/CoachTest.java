@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CoachTest {
     Coach coach = new Coach("Костицын", "Роман", "Игоревич");
+
     @Test
     void testGetSurname() {
         Assertions.assertEquals("Костицын", coach.getSurname());
