@@ -1,7 +1,6 @@
 package ru.yandex.practicum.gym;
 
 import java.util.Objects;
-import java.util.Comparator;
 
 public class CounterOfTrainings implements Comparable<CounterOfTrainings> {
     private Integer count;
