@@ -1,8 +1,11 @@
 package ru.yandex.practicum.gym;
+import java.util.Collections;
 
 import java.util.*;
 
 public class Timetable {
+
+
 
     private HashMap<DayOfWeek, DayTable> timetable = new HashMap<>();
 
@@ -41,8 +44,8 @@ public class Timetable {
         return trainingSessions;
     }
 
-    public ArrayList<CounterOfTrainings> getCountByCoaches() {
-        ArrayList<CounterOfTrainings> listOrderCoaches = new ArrayList<>();
+    public List<CounterOfTrainings> getCountByCoaches() {
+        List<CounterOfTrainings> listOrderCoaches = new ArrayList<>();
 
         Map<Coach, Integer> listCoaches = new LinkedHashMap<>();
         ArrayList<TrainingSession> listTrainingSession = getAllTrainingSessions();
@@ -55,17 +58,8 @@ public class Timetable {
             listOrderCoaches.add(counterOfTrainings);
         }
 
+        Collections.sort(listOrderCoaches);
         return listOrderCoaches;
     }
-/*
-    @Override
-    public String toString() {
-        String result = new String();
-        for (DayOfWeek dayOfWeek : timetable.keySet()) {
-            result = result + "День " + dayOfWeek+":\n";
-            result = result + timetable.get(dayOfWeek) +"\n";
-        }
-        return(result);
-    }
-*/
+
 }

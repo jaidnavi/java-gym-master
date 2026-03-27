@@ -31,17 +31,5 @@ public class DayTable {
         }
         return trainingSessions;
     }
-/*
-    @Override
-    public String toString() {
-        String result = "";
-        for (TimeOfDay timeOfDay : dayTable.keySet()) {
-            result = result + "Время: " + timeOfDay.getHours() + ":" + timeOfDay.getMinutes() + ":\n";
-            for (int i = 0; i < dayTable.get(timeOfDay).size(); i++) {
-                result = result + dayTable.get(timeOfDay).get(i).getGroup().getTitle() + "\n";
-            }
-        }
-        return (result);
-    }
-*/
+
 }

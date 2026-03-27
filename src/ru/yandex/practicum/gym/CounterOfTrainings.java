@@ -3,7 +3,7 @@ package ru.yandex.practicum.gym;
 import java.util.Objects;
 import java.util.Comparator;
 
-public class CounterOfTrainings implements Comparator<CounterOfTrainings> {
+public class CounterOfTrainings implements Comparable<CounterOfTrainings> {
     private Integer count;
     private Coach coach;
 
@@ -12,17 +12,9 @@ public class CounterOfTrainings implements Comparator<CounterOfTrainings> {
         this.coach = coach;
     }
 
-    public Integer getCount() {
-        return count;
-    }
-
-    public Coach getCoach() {
-        return coach;
-    }
-
     @Override
-    public int compare(CounterOfTrainings item1, CounterOfTrainings item2) {
-        return Integer.compare(item1.count, item2.count);
+    public int compareTo(CounterOfTrainings o) {
+        return Integer.compare(o.count,this.count);
     }
 
     @Override
@@ -36,6 +28,14 @@ public class CounterOfTrainings implements Comparator<CounterOfTrainings> {
     @Override
     public int hashCode() {
         return Objects.hash(count, coach);
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public Coach getCoach() {
+        return coach;
     }
 
 }
